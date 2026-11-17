@@ -83,7 +83,7 @@ function setup() {
 }
 
 function draw() {
-  background(5, 4, 9);
+  background("#1a1a1a");
 
   updateGaze();
   drawEyeLayer();
