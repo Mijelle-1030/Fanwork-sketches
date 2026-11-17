@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fanwork Sketches — mijelle</title>
+
+  <!-- 像素字体；如果字体暂时加载失败，会使用等宽字体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --paper: #F5E3CC;
+      --blue: #2C31F4;
+      --ink: #171526;
+      --soft-blue: #8784CE;
+      --pixel-font: "Press Start 2P", "Courier New", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--pixel-font);
+    }
+
+    /* 页面的细小网点，参考印刷颗粒感 */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.22;
+      background-image: radial-gradient(var(--blue) 0.8px, transparent 0.8px);
+      background-size: 13px 13px;
+    }
+
+    .page {
+      width: min(1040px, calc(100% - 44px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    header,
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-size: 10px;
+      line-height: 1.8;
+    }
+
+    header {
+      padding-bottom: 16px;
+      border-bottom: 3px solid var(--blue);
+    }
+
+    .brand,
+    .author {
+      color: var(--blue);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 330px;
+      display: flex;
+      align-items: center;
+      margin: 26px 0 36px;
+      padding: 36px;
+      overflow: hidden;
+      border: 3px solid var(--blue);
+      background: var(--paper);
+      box-shadow: 8px 8px 0 var(--blue);
+    }
+
+    /* 蓝色网点和斜线全部由 CSS 绘制 */
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      right: -20px;
+      top: -65px;
+      border-radius: 50%;
+      background-image: radial-gradient(var(--blue) 2px, transparent 2.5px);
+      background-size: 13px 13px;
+      opacity: 0.75;
+      transform: rotate(-15deg);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 210px;
+      height: 150px;
+      right: 46px;
+      bottom: -20px;
+      background: repeating-linear-gradient(
+        135deg,
+        var(--blue) 0 3px,
+        transparent 3px 12px
+      );
+      opacity: 0.55;
+      transform: rotate(-12deg);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 740px;
+    }
+
+    .label {
+      display: inline-block;
+      margin-bottom: 26px;
+      padding: 10px 12px;
+      background: var(--blue);
+      color: var(--paper);
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--blue);
+      font-size: clamp(25px, 5.2vw, 59px);
+      line-height: 1.45;
+      letter-spacing: -0.06em;
+      text-shadow: 4px 4px 0 var(--paper);
+    }
+
+    .subtitle {
+      max-width: 530px;
+      margin: 26px 0 0;
+      font-size: 10px;
+      line-height: 2.2;
+      background: var(--paper);
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 42px 0 18px;
+      color: var(--blue);
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      position: relative;
+      min-height: 270px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 25px;
+      overflow: hidden;
+      border: 3px solid var(--blue);
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      box-shadow: 7px 7px 0 var(--blue);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translate(4px, 4px);
+      box-shadow: 3px 3px 0 var(--blue);
+      outline: none;
+    }
+
+    .card-number {
+      position: relative;
+      z-index: 1;
+      color: var(--blue);
+      font-size: 10px;
+      line-height: 1.7;
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      color: var(--blue);
+      font-size: clamp(15px, 2.4vw, 23px);
+      line-height: 1.55;
+    }
+
+    .card p {
+      max-width: 330px;
+      margin: 0;
+      font-size: 9px;
+      line-height: 2;
+    }
+
+    .card-arrow {
+      position: absolute;
+      right: 22px;
+      bottom: 18px;
+      color: var(--blue);
+      font-size: 22px;
+    }
+
+    .card-eye::before {
+      content: "";
+      position: absolute;
+      width: 125px;
+      height: 125px;
+      right: -5px;
+      top: -5px;
+      background-image: radial-gradient(var(--soft-blue) 2px, transparent 2px);
+      background-size: 10px 10px;
+    }
+
+    .card-glitch::before {
+      content: "";
+      position: absolute;
+      width: 145px;
+      height: 100px;
+      right: 0;
+      top: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0 9px,
+        var(--soft-blue) 9px 13px,
+        transparent 13px 19px
+      );
+      clip-path: polygon(18% 0, 100% 0, 100% 100%, 0 100%, 0 50%);
+    }
+
+    footer {
+      margin-top: 58px;
+      padding-top: 18px;
+      border-top: 3px solid var(--blue);
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        min-height: 300px;
+        padding: 24px;
+      }
+
+      .hero::before {
+        right: -170px;
+        opacity: 0.45;
+      }
+
+      .hero::after {
+        right: -90px;
+        opacity: 0.3;
+      }
+
+      .projects {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: 220px;
+      }
+
+      header,
+      footer {
+        font-size: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <span class="brand">MIJELLE / ARCHIVE</span>
+      <span>INTERACTIVE SKETCHES</span>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-content">
+          <span class="label">A SMALL COLLECTION OF EXPERIMENTS</span>
+          <h1>FANWORK<br>SKETCHES<span aria-hidden="true">_</span></h1>
+          <p class="subtitle">
+            Interactive fragments, visual glitches, and things that look back.
+          </p>
+        </div>
+      </section>
+
+      <div class="section-title">
+        <span>SELECT A SKETCH</span>
+        <span>01 — 02</span>
+      </div>
+
+      <section class="projects" aria-label="Sketches">
+        <a class="card card-eye" href="./%5BL%5Deyecontact/eyecontact.html">
+          <span class="card-number">01 / INTERACTION</span>
+          <div class="card-content">
+            <h2>EYE CONTACT</h2>
+            <p>Move your hand. The eye follows.</p>
+          </div>
+          <span class="card-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a class="card card-glitch" href="./glitch_background/glitch.html">
+          <span class="card-number">02 / VISUAL</span>
+          <div class="card-content">
+            <h2>GLITCH BACKGROUND</h2>
+            <p>A little digital disturbance.</p>
+          </div>
+          <span class="card-arrow" aria-hidden="true">↗</span>
+        </a>
+      </section>
+    </main>
+
+    <footer>
+      <span>MADE BY <strong class="author">MIJELLE</strong></span>
+      <span>END OF FILE ■</span>
+    </footer>
+  </div>
+</body>
+</html>
